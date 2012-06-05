@@ -38,7 +38,7 @@ static char * readFileData(const char * definitionsFilePath, size_t * length)
     FILE * file = fopen(definitionsFilePath, "r");
     
     if (file == NULL) {
-        printf("Definitions file could not be opened.\n");
+        printf("Definitions file \"%s\" could not be opened.", definitionsFilePath);
         exit(EXIT_FAILURE);
     }
     
@@ -124,26 +124,24 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
 }
 
 int main (int argc, const char * argv[])
-{
-    const char * filepath = 0;
-    
-    if (argc > 1) {
-        filepath = argv[1];
-    } else {
-        printf("Need a filepath argument");
-        exit(EXIT_FAILURE);
+{    
+    if (argc < 3) {
+        printf("Usage: asciigenerator input.bmp definition.txt\n");
+        exit(EXIT_SUCCESS);
     }
     
-    node_t * root = createTreeFromFile("/Users/amy/Desktop/test.txt");
+    const char * inputFile = argv[1];
+    const char * definitionsFile = argv[2];
+        
+    node_t * root = createTreeFromFile(definitionsFile);
    
     int width = 0;
     int height = 0;
     int rowSize = 0;
      
-    unsigned char * bmpData = createBitmapData(filepath, &width, &height, &rowSize);
+    unsigned char * bmpData = createBitmapData(inputFile, &width, &height, &rowSize);
    
     calculateGrid(bmpData, width, height, root);
-    printf("Overall darkness: %.3f\n", overallDarkness(bmpData, width, height));
     
     free(bmpData);
     destroyTree(root);

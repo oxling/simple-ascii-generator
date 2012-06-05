@@ -64,19 +64,14 @@ float overallDarkness(unsigned char * bmpData, int width, int height) {
     return darknessSum/(width * height);
 }
 
-static unsigned char * createBitmapFromData(pixel_t * pxArray, int numPixels, int width, int height)
-{
-    int rowSize = ((width * BITS_PER_PIXEL)/32)*4;
-    
-    BMPHeader_t header;
-    header.head[0] = 'B';
-    header.head[1] = 'M';
-
-}
-
 unsigned char * createBitmapData(const char * fileLocation, int * width, int * height, int * rowSize)
 {
     FILE * file = fopen(fileLocation, "r");
+    
+    if (file == NULL) {
+        printf("Bitmap file \"%s\" could not be opened.", fileLocation);
+        exit(EXIT_FAILURE);
+    }
     
     BMPHeader_t header;
     size_t len = fread(&header, sizeof(header), 1, file);
@@ -91,8 +86,6 @@ unsigned char * createBitmapData(const char * fileLocation, int * width, int * h
         bmpLength += (header.size[i] << i*8);
     }
     
-    printf("Bitmap is %i bytes long\n", bmpLength);
-    
     unsigned char * data = malloc(sizeof(unsigned char) * bmpLength);
     fseek(file, 0, SEEK_SET);
     
@@ -106,19 +99,12 @@ unsigned char * createBitmapData(const char * fileLocation, int * width, int * h
         bmpAddr += (header.dataAddress[i] << i*8);
     }
     
-    printf("Data starts at address 0x%02X\n", bmpAddr);
-    
     DIBHeader_t dibHeader = *((DIBHeader_t *)(data+sizeof(header)));
-    
-    printf("Pixel width: %i\n", dibHeader.pxWidth);
-    printf("Pixel height: %i\n", dibHeader.pxHeight);
-    printf("Bits per pixel: %i\n", dibHeader.bitsPerPx[0]);
     
     if (dibHeader.bitsPerPx[0] != 32) {
         printf("This application currently only supports 32-bit bitmaps. Sorry!");
         exit(EXIT_FAILURE);
     }
-    
     
     int bmpDataLen = bmpLength - bmpAddr;
     unsigned char * bmpData = malloc(sizeof(unsigned char) * bmpDataLen); 
