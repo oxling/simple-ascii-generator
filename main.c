@@ -147,13 +147,12 @@ int main (int argc, const char * argv[])
     const char * definitionsFile = argv[2];
         
     node_t * root = createTreeFromFile(definitionsFile);
-   
+       
     int width = 0;
     int height = 0;
     int rowSize = 0;
      
     unsigned char * bmpData = createBitmapData(inputFile, &width, &height, &rowSize);
-    
     int grid = 1;
     if (argc == 4) {
         grid = atoi(argv[3]);

@@ -17,14 +17,16 @@ typedef struct letter {
 typedef struct node {
     struct node * left;
     struct node * right;
+    struct node * parent;
+    int height;
     struct letter * letter;
 } node_t;
 
 node_t * newNode(char * character, float darkness);
 
 char * findLetter(node_t * root, float darkness);
+int balanceFactor(node_t * root);
 void insertLetter(node_t * root, char * character, float darkness);
-void deleteLetter(letter_t letter);
 void destroyTree(node_t * root);
 
 

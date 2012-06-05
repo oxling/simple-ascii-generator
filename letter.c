@@ -51,6 +51,8 @@ node_t * newNode(char * character, float darkness)
     newNode->letter = newLetter;
     newNode->left = NULL;
     newNode->right = NULL;
+    newNode->height = 0;
+    newNode->parent = NULL;
     
     return newNode;
 }
@@ -61,34 +63,79 @@ char * findLetter(node_t * root, float darkness)
     return node->letter->character;
 }
 
+static node_t * rotateRight(node_t * root)
+{
+    
+}
+
+static node_t * balanceNode(node_t * node)
+{
+    if (node == NULL)
+        return NULL;
+    
+    node_t * rootNode = node;
+    
+    int diff = balanceFactor(node);
+    
+    if (abs(balanceFactor(node)) > 1) {
+        switch (diff) {
+            case -2:;
+                int rightBal = balanceFactor(node->right);
+                if (rightBal == -1)
+                    printf("right right case\n");
+                else if (rightBal == 1)
+                    printf("right left case\n");
+                break;
+            case 2:;
+                int leftBal = balanceFactor(node->left);
+                if (leftBal == -1)
+                    printf("left left case\n");
+                else if (leftBal == 1)
+                    printf("left right case\n");
+                break;
+            default:
+                printf("Unbalanced: %i\n", diff);
+        }
+    }
+
+    return rootNode;
+}
+
 void insertLetter(node_t * root, char * character, float darkness)
 {
     float rootDarkness = root->letter->darkness;
     
-    if (strcmp(root->letter->character, character)==0) {
+    if (strcmp(root->letter->character, character) == 0) {
         return;
     }
     
     if (darkness < rootDarkness) {
         if (root->left == NULL) {
+            
             node_t * n = newNode(character, darkness);
             root->left = n;
+            n->height = root->height+1;
+            n->parent = root;
+            
+            balanceNode(root);
+            
         } else {
             insertLetter(root->left, character, darkness);
         }
     } else {
         if (root->right == NULL) {
+            
             node_t * n = newNode(character, darkness);
             root->right = n;
+            n->height = root->height+1;
+            n->parent = root;
+            
+            balanceNode(root);
+
         } else {
             insertLetter(root->right, character, darkness);
         }
     }
-    
-}
-
-void deleteLetter(letter_t letter)
-{
     
 }
 
@@ -110,6 +157,29 @@ void destroyTree(node_t * root)
     } else {
         destroyNode(root);
     }
+}
+
+static int maxChildHeight(node_t * root)
+{   
+    if (root == NULL)
+        return 0;
+    
+    int leftHeight = root->left? maxChildHeight(root->left) : root->height;
+    int rightheight = root->right? maxChildHeight(root->right) : root->height;
+    
+    return leftHeight > rightheight? leftHeight : rightheight;
+}
+
+int balanceFactor(node_t * root)
+{
+    if (root == NULL) {
+        return 0;
+    }
+    
+    int rightHeight = maxChildHeight(root->right);
+    int leftHeight = maxChildHeight(root->left);
+
+    return (leftHeight - rightHeight);
 }
 
 
