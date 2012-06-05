@@ -44,8 +44,6 @@ node_t * newNode(char * character, float darkness)
     node_t * newNode = malloc(sizeof(node_t));
     letter_t * newLetter = malloc(sizeof(letter_t));
     
-    
-    
     newLetter->character = malloc(sizeof(character));
     strcpy(newLetter->character, character);
     newLetter->darkness = darkness;
@@ -67,7 +65,7 @@ void insertLetter(node_t * root, char * character, float darkness)
 {
     float rootDarkness = root->letter->darkness;
     
-    if (root->letter->character == character) {
+    if (strcmp(root->letter->character, character)==0) {
         return;
     }
     
