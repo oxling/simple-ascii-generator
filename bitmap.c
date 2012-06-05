@@ -81,6 +81,11 @@ unsigned char * createBitmapData(const char * fileLocation, int * width, int * h
         exit(EXIT_FAILURE);
     }
     
+    if (header.head[0] != 'B' || header.head[1] != 'M') {
+        printf("%s is not a valid bitmap file", fileLocation);
+        exit(EXIT_FAILURE);
+    }
+    
     int bmpLength = 0;
     for (int i=0; i<4; i++) {
         bmpLength += (header.size[i] << i*8);
