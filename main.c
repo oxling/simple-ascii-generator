@@ -101,7 +101,7 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
         bytesRead++;
         
         
-        if (c == ' ' || c == '\n' || c == ';') {
+        if (c == ':' || c == '\n' || c == ';') {
             
             char * str = malloc(bytesRead * sizeof(char));
             memset(str, 0, bytesRead);
@@ -109,7 +109,7 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
             
             bytesRead = 0;
             
-            if (c == ' ') {
+            if (c == ':') {
                 //First section - a letter
                 letter = malloc(sizeof(str));
                 strcpy(letter, str);
