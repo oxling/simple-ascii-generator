@@ -13,19 +13,29 @@
 #import "letter.h"
 #import "bitmap.h"
 
-static void calculateGrid(unsigned char * bmpData, int width, int height, node_t * root)
+static void calculateGrid(unsigned char * bmpData, int grid, int width, int height, node_t * root)
 {
     int rowSize = (BITS_PER_PIXEL * width)/32 * 4;
-        
-    for (int row=0; row<abs(height); row++) {
-        for (int col=0; col<width; col++) {
-            float val = darkness(locatePixel(bmpData, rowSize, row, col));
-            char * letter = findLetter(root, val);
+    
+    int gridHeight = height/grid;
+    int gridWidth = width/grid;
+    
+    for (int row=0; row<gridHeight; row++) {
+        for (int col=0; col<gridWidth; col++) {
+            float sum = 0;
+            for (int pxRow=0; pxRow<grid; pxRow++) {
+                for (int pxCol=0; pxCol<grid; pxCol++) {
+                    float val = darkness(locatePixel(bmpData, rowSize, row*grid+pxRow, col*grid+pxCol));
+                    sum+=val;
+                }
+            }
+            sum = sum/(grid * grid);
+            char * letter = findLetter(root, sum);
             printf("%s", letter);
         }
         printf("\n");
     }
-    
+            
     destroyTree(root);
 
 }
@@ -129,7 +139,7 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
 int main (int argc, const char * argv[])
 {    
     if (argc < 3) {
-        printf("Usage: asciigenerator input.bmp definition.txt\n");
+        printf("Usage: asciigenerator input.bmp definition.txt [grid size]\n");
         exit(EXIT_SUCCESS);
     }
     
@@ -143,8 +153,13 @@ int main (int argc, const char * argv[])
     int rowSize = 0;
      
     unsigned char * bmpData = createBitmapData(inputFile, &width, &height, &rowSize);
+    
+    int grid = 1;
+    if (argc == 4) {
+        grid = atoi(argv[3]);
+    }
    
-    calculateGrid(bmpData, width, height, root);
+    calculateGrid(bmpData, grid, width, height, root);
     
     free(bmpData);
     destroyTree(root);
