@@ -31,6 +31,7 @@
                      +XX++  +XX+ +XX++X+ +X-  +X+ +XX++X+ +X+   XX++-X+++X-+++X-  +X+ +X+                  
                       ++XXXXX-+   +XXX+ ++X-++-X-+ +XXX+ +-X-+  +XX++X-++-X-+ +X---+ +-X-+                 
                           +                                                     ++                         
+                                                                                                           
 
 A simple ASCII-Art Generator.
 
