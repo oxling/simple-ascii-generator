@@ -9,9 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 #import "letter.h"
 
-static char characterAtNode(node_t * node)
+static char * characterAtNode(node_t * node)
 {
     return node->letter->character;
 }
@@ -38,12 +39,15 @@ static node_t * findNode(node_t * root, float darkness)
     }
 }
 
-node_t * newNode(char character, float darkness)
+node_t * newNode(char * character, float darkness)
 {
     node_t * newNode = malloc(sizeof(node_t));
     letter_t * newLetter = malloc(sizeof(letter_t));
     
-    newLetter->character = character;
+    
+    
+    newLetter->character = malloc(sizeof(character));
+    strcpy(newLetter->character, character);
     newLetter->darkness = darkness;
     
     newNode->letter = newLetter;
@@ -53,13 +57,13 @@ node_t * newNode(char character, float darkness)
     return newNode;
 }
 
-char findLetter(node_t * root, float darkness)
+char * findLetter(node_t * root, float darkness)
 {
     node_t * node = findNode(root, darkness);
     return node->letter->character;
 }
 
-void insertLetter(node_t * root, char character, float darkness)
+void insertLetter(node_t * root, char * character, float darkness)
 {
     float rootDarkness = root->letter->darkness;
     
@@ -90,6 +94,13 @@ void deleteLetter(letter_t letter)
     
 }
 
+static void destroyNode(node_t * node)
+{
+    free(node->letter->character);
+    free(node->letter);
+    free(node);
+}
+
 void destroyTree(node_t * root)
 {
     if (root->left) {
@@ -99,8 +110,7 @@ void destroyTree(node_t * root)
         destroyTree(root->right);
         root->right = NULL;
     } else {
-        free(root->letter);
-        free(root);
+        destroyNode(root);
     }
 }
 

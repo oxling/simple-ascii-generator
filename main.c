@@ -20,8 +20,8 @@ static void calculateGrid(unsigned char * bmpData, int width, int height, node_t
     for (int row=0; row<abs(height); row++) {
         for (int col=0; col<width; col++) {
             float val = darkness(locatePixel(bmpData, rowSize, row, col));
-            char letter = findLetter(root, val);
-            printf("%c", letter);
+            char * letter = findLetter(root, val);
+            printf("%s", letter);
         }
         printf("\n");
     }
@@ -75,7 +75,7 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
     int bytesRead = 0;
     
     float darkness = 0;
-    char letter = 0;
+    char * letter = 0;
     node_t * root = NULL;
     
     for (int i=0; i<length; i++) {
@@ -101,7 +101,8 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
             
             if (c == ' ') {
                 //First section - a letter
-                letter = str[0];
+                letter = malloc(sizeof(str));
+                strcpy(letter, str);
             } else {
                 //Second section - a float
                 darkness = atof(str);
@@ -110,10 +111,12 @@ static node_t * createTreeFromFile(const char * definitionsFilePath)
                     root = newNode(letter, darkness);
                 } else {
                     insertLetter(root, letter, darkness);
+                    free(letter);
                 }
             }
             
             free(str);
+            
         }
     }
     

@@ -10,7 +10,7 @@
 #define AsciiGenerator_letter_h
 
 typedef struct letter {
-    char character;
+    char * character;
     float darkness;
 } letter_t;
 
@@ -20,10 +20,10 @@ typedef struct node {
     struct letter * letter;
 } node_t;
 
-node_t * newNode(char character, float darkness);
+node_t * newNode(char * character, float darkness);
 
-char findLetter(node_t * root, float darkness);
-void insertLetter(node_t * root, char character, float darkness);
+char * findLetter(node_t * root, float darkness);
+void insertLetter(node_t * root, char * character, float darkness);
 void deleteLetter(letter_t letter);
 void destroyTree(node_t * root);
 
