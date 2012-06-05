@@ -51,7 +51,6 @@ node_t * newNode(char * character, float darkness)
     newNode->letter = newLetter;
     newNode->left = NULL;
     newNode->right = NULL;
-    newNode->height = 0;
     newNode->parent = NULL;
     
     return newNode;
@@ -88,9 +87,9 @@ static node_t * balanceNode(node_t * node)
                 break;
             case 2:;
                 int leftBal = balanceFactor(node->left);
-                if (leftBal == -1)
+                if (leftBal == 1)
                     printf("left left case\n");
-                else if (leftBal == 1)
+                else if (leftBal == -1)
                     printf("left right case\n");
                 break;
             default:
@@ -114,10 +113,9 @@ void insertLetter(node_t * root, char * character, float darkness)
             
             node_t * n = newNode(character, darkness);
             root->left = n;
-            n->height = root->height+1;
             n->parent = root;
             
-            balanceNode(root);
+            balanceNode(root->parent);
             
         } else {
             insertLetter(root->left, character, darkness);
@@ -127,10 +125,9 @@ void insertLetter(node_t * root, char * character, float darkness)
             
             node_t * n = newNode(character, darkness);
             root->right = n;
-            n->height = root->height+1;
             n->parent = root;
             
-            balanceNode(root);
+            balanceNode(root->parent);
 
         } else {
             insertLetter(root->right, character, darkness);
@@ -164,10 +161,10 @@ static int maxChildHeight(node_t * root)
     if (root == NULL)
         return 0;
     
-    int leftHeight = root->left? maxChildHeight(root->left) : root->height;
-    int rightheight = root->right? maxChildHeight(root->right) : root->height;
+    int leftHeight = maxChildHeight(root->left);
+    int rightheight = maxChildHeight(root->right);
     
-    return leftHeight > rightheight? leftHeight : rightheight;
+    return (leftHeight > rightheight? leftHeight : rightheight) + 1;
 }
 
 int balanceFactor(node_t * root)

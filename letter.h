@@ -18,7 +18,6 @@ typedef struct node {
     struct node * left;
     struct node * right;
     struct node * parent;
-    int height;
     struct letter * letter;
 } node_t;
 
