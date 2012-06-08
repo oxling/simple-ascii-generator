@@ -1,42 +1,28 @@
-      ++++++   ++                          +++                  +         ++++++     ++++++++++++++++++++  
-     +X-+-XX   XX+                        +XX+                 +X+      +-X++XX+   ++XX++-XX+++XX-+++XX-+  
-     XX   +X+  ++                          +X+                 +X-      +X+  +-+  +-X+    +X+  XX+   XX+   
-    +XX    -+                              +X+                 XXX+     +X+   +-  +X-      -+  XX+   XX+   
-     XX++  ++  +++  ++++++ ++++   ++++-+   +X+   ++++         +-+X-     +XX+   + +XX+      ++  XX+   XX+   
-     +XXX+    +XX+ +XX--XX+--XX++-XX--XX+  +X+  -++-X+        -++XX+    +XXX++   +XX+          XX+   XX+   
-      +XXX++   +X+  XX+ +XX+ +X+  XX+ +XX+ +X+ +-  +XX       +X+ +X+     +-XXX+  +XX           XX+   XX+   
-       +-XX-+  +X+  XX   X-  +X+  X-   +X+ +X+ XX---XX       ++  +XX+      +XXX+ +XX           XX+   XX+   
-         +XX+  +X+  XX   X-  +X+  X-   +X+ +X+ X+           +XXXXXXX+       +-XX +XX+          XX+   XX+   
-    ++    +X-  +X+  XX   X-  +X+  X-   +X+ +X+ X-    ++     +-    +XX   -    +XX+ XX+          XX+   XX+   
-    +-    +X+  +X+  XX   X-  +X+  X-   -X  +X+ -X+   ++     X+     XX+  X+    XX+ +XX+     ++  XX+   XX+   
-    +X++ +-X+  -X+  XX   X-  +X+  XX+ +X+  -X+ +XX++-+     +X      +X-  -X+  +X+   +XX+  ++-+  XX+   XX+   
-    +X---X-+  +-X-++XX+++XX+++X-+ XX--X+  +-X++ +XXX+     +-X++   +-XX+ -+--XX++    +-XXXX++ +-XX-++-XX-+  
-                                  X-                                                   ++                  
-                                  X-                                                                       
-                                 +XX                                                                       
-                                ++--++                                                                     
-                                                                                                           
-                                                                                                           
-                        +++++ +                                                                            
-                      +XX-++XXX                                                                            
-                     +XX+   +-X                                          ++                                
-                    +XX+     +X                                         +X+                                
-                    +X-       +   +++++  +++++++   +++++  ++++++ +++++ +-X-++  ++++   ++++++               
-                    -X+          +-++XX++-X---XX  +-++XX++-X-XX-+X+ -X ++X++++--++X-++-X-XX-               
-                    XX+    ++---+-+  +X- +X-+ +X+ -+  +X- +X- +++X+ +X+ +X+  +X+  +X+ +X- ++               
-                    XX+      XX++X----X- +X+  +X++X----X- +X+   ++ +-X+ +X+  X-   +XX +X+                  
-                    -X+      -X++X+      +X+  +X++X+      +X+    +-++X+ +X+ +X-    XX +X+                  
-                    +XX      -X++X+    +++X+  +X++X+    +++X+   +X+ +X+ +X+ +XX    XX +X+                  
-                    +XX+     -X+ XX+  +-++X+  +X+ XX+  +-++X+   XX  +X+ +X+  -X+   X- +X+                  
-                     +XX++  +XX+ +XX++X+ +X-  +X+ +XX++X+ +X+   XX++-X+++X-+++X-  +X+ +X+                  
-                      ++XXXXX-+   +XXX+ ++X-++-X-+ +XXX+ +-X-+  +XX++X-++-X-+ +X---+ +-X-+                 
-                          +                                                     ++                         
-                                                                                                           
+      ,```     O-                    <<**`                               ,,``     ``                       
+    -X*OO@     <.                    ``,O,                     =O@<    -X**O@  --OOO@<< *O@OOO  *OO@OO     
+    O, ``O  ,<<<`  <<<=<<<<`-<`<<<      O,     <=<<             ==X    O,  `O `OO<  O<<   O``      O`      
+    O<`     ,<<O,  oo@o@X**o-OO***O`    O,    **<==O.           O O,,  O<``   <OO   ,,,   O``      O`      
+    ,%@OO<     X,  --* X<<<% O<   =<    O,   <@<---O<          <= <==  ,%@@O< =%%         O``      O`      
+    ,  ,,O,    X,  --* *,<<* O,   <*    O,   <O=====-          *OOOOO  ,   ,O,<OO         O``      O`      
+   ,@.   O,    X,  --* *,<<* O%``,O<    O,   ,@,   -,        ..O   **<,@.   O,.@@<  <<<   O``      O`      
+   ,@O*OO=  XOO@OO<XX@<**,,@-O=OOOo  **O@OO-- <OOOOX,        OO@= <OO@-@O**O=  --OOO*,, *O@OOO  *OO@OO     
+    ,`,                      O,                 ,``                    ,`,,       ,`                       
+                            <@=<<                                                                          
+                            ,<<<<                                                                          
+                  ,``                                                                                      
+                -OOOO@-                                            OO                                      
+               ,@< ``O<  <<=<  ,,<,o<``   <==<   <<< <=,, `<=<<   ,OO,,`    ,o-    <<  <=,                 
+               oO    `  ***<=O.,,XOo*%%  **<<=O. <<@%%=<< <=<**o <X@@XX=   **<%OO, <@%%%=<                 
+               == `,,,,<@<<--O<  %o `OO <@<---O<   O<     `<===O   OO    <<O   **=  O<<                    
+               oO ,%%O%<O=====-  %<  OO <O=====-   O      O=<<<O   OO    <<*   oo%  O                      
+               ,@<   =<,@,,  -,  %<  OO ,@,   -,   O     ,O  ==O   @@` ,,--@, `OO<  O                      
+                <OO**O< <OOOOX,--@O`=@@= <OOOOX,-OO@OO<   %OO==@=  ==OOO<  <XOOoo -O@OOO<                  
+                  ,,,      ,`              ,,`             `          `      `                                                                                                                                        
 
 A simple ASCII-Art Generator.
 
 To use, run AsciiGenerator example/input.bmp example/definitions.txt [grid size width] [grid size height]
 
-The definitions file maps characters (including unicode characters) to darkness values. Note - ':' is a reserved character; trying to map a colon will cause the program to fail.
+The definitions file maps characters (including unicode characters) to darkness values. The format of the file is [character]:[value], where the entries are separated by newlines and the last entry ends with a semicolon. Note - ':' and ';' are reserved characters; trying to map a colon or semi-colon will cause the program to fail.
 
-The grid size defines scale - for example, a grid size of 2, 3 will average a block of 6 pixels. This argument is optional.
+The grid size defines scale - for example, a grid size of 2, 3 will average a block of 6 pixels two pixels wide and three pixels tall. This argument is optional.
