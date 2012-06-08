@@ -62,9 +62,11 @@ char * findLetter(node_t * root, float darkness)
     return node->letter->character;
 }
 
+//TODO
 static node_t * rotateRight(node_t * root)
 {
-    
+    node_t * rootParent = root->parent;
+    return root;
 }
 
 static node_t * balanceNode(node_t * node)
@@ -89,8 +91,10 @@ static node_t * balanceNode(node_t * node)
                 int leftBal = balanceFactor(node->left);
                 if (leftBal == 1)
                     printf("left left case\n");
-                else if (leftBal == -1)
+                else if (leftBal == -1) {
                     printf("left right case\n");
+                    rootNode = rotateRight(node);
+                }
                 break;
             default:
                 printf("Unbalanced: %i\n", diff);
