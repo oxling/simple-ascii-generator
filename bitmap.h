@@ -10,10 +10,10 @@
 #define AsciiGenerator_bitmap_h
 #endif
 
-#define BITS_PER_PIXEL 32
+#define BITS_PER_PIXEL 32 //Currently on 32-bit bitmaps are supported
 
 typedef struct pixel {
-    unsigned char        :3,
+    unsigned char        :3, //reserved
                     alpha:5;
     unsigned char   green;
     unsigned char   red;

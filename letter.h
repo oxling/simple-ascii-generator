@@ -9,9 +9,10 @@
 #ifndef AsciiGenerator_letter_h
 #define AsciiGenerator_letter_h
 
+// Associates a Unicode character with a darkness value
 typedef struct letter {
     char * character;
-    float darkness;
+    float darkness; //0.0 = black, 1.0 = white
 } letter_t;
 
 typedef struct node {
@@ -26,10 +27,8 @@ node_t * treeRoot;
 
 node_t * newNode(char * character, float darkness);
 char * findLetter(node_t * root, float darkness);
-int balanceFactor(node_t * root);
 void insertLetter(node_t * root, char * character, float darkness);
 void destroyTree(node_t * root);
-void testNode(node_t * node);
 void printTree();
 
 

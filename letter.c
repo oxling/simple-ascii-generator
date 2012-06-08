@@ -12,34 +12,50 @@
 #include <string.h>
 #import "letter.h"
 
+void balanceNode(node_t * node);
+void setLeftNode(node_t * parent, node_t * leaf);
+void setRightNode(node_t * parent, node_t * leaf);
+node_t * findNode(node_t * root, float darkness, float diff);
+void testNode(node_t * node);
+
+#pragma mark - Tree creation and navigation
+
+void insertLetter(node_t * root, char * character, float darkness)
+{
+    float rootDarkness = root->letter->darkness;
+    
+    if (strcmp(root->letter->character, character) == 0) {
+        return;
+    }
+    
+    if (darkness < rootDarkness) {
+        if (root->left == NULL) {
+            
+            node_t * n = newNode(character, darkness);
+            setLeftNode(root, n);
+            balanceNode(root->parent);
+            
+        } else {
+            insertLetter(root->left, character, darkness);
+        }
+    } else {
+        if (root->right == NULL) {
+            
+            node_t * n = newNode(character, darkness);
+            setRightNode(root, n);
+            balanceNode(root->parent);
+            
+        } else {
+            insertLetter(root->right, character, darkness);
+        }
+    }
+    
+}
+
 static char * characterAtNode(node_t * node)
 {
     if (node == NULL) return "";
     return node->letter->character;
-}
-
-static node_t * findNode(node_t * root, float darkness, float diff)
-{
-    
-    if (!root) {
-        return NULL;
-    }
-    
-    float nodeDarkness = root->letter->darkness;
-    float matchedDarkness = nodeDarkness > darkness ? nodeDarkness - darkness : darkness - nodeDarkness; //How close of a match it is
-
-    if (diff < matchedDarkness) {
-        //This node is actually less of a match than the previous node.
-        return NULL;
-    }
-    
-    if (darkness < nodeDarkness) {
-        node_t * found = findNode(root->left, darkness, matchedDarkness);
-        return found ? found : root;
-    } else {
-        node_t * found = findNode(root->right, darkness, matchedDarkness);
-        return found ? found : root;
-    }
 }
 
 node_t * newNode(char * character, float darkness)
@@ -59,23 +75,39 @@ node_t * newNode(char * character, float darkness)
     return newNode;
 }
 
-char * findLetter(node_t * root, float darkness)
-{
-    node_t * node = findNode(root, darkness, 100000);
-    return node->letter->character;
-}
-
-static void setLeftNode(node_t * parent, node_t * leaf)
+void setLeftNode(node_t * parent, node_t * leaf)
 {
     if (leaf != NULL) leaf->parent = parent;
     if (parent != NULL) parent->left = leaf;
 }
 
-static void setRightNode(node_t * parent, node_t * leaf)
+void setRightNode(node_t * parent, node_t * leaf)
 {
     if (leaf != NULL) leaf->parent = parent;
     if (parent != NULL) parent->right = leaf;
 }
+
+static void destroyNode(node_t * node)
+{
+    if (node == NULL) return;
+    
+    free(node->letter->character);
+    free(node->letter);
+    free(node);
+}
+
+void destroyTree(node_t * root)
+{
+    if (root == NULL) return;
+    
+    destroyTree(root->left);
+    root->left = NULL;
+    destroyTree(root->right);
+    root->right = NULL;
+    destroyNode(root);
+}
+
+#pragma mark - Debug
 
 void testNode(node_t * node)
 {
@@ -105,6 +137,7 @@ void printTree()
     printf("\n");
 }
 
+#pragma mark - AVL tree balancing
 
 static void rotateRight(node_t * node)
 {    
@@ -155,7 +188,30 @@ static void rotateLeft(node_t * node)
 
 }
 
-static void balanceNode(node_t * node)
+static int maxChildHeight(node_t * root)
+{   
+    if (root == NULL)
+        return 0;
+    
+    int leftHeight = maxChildHeight(root->left);
+    int rightheight = maxChildHeight(root->right);
+    
+    return (leftHeight > rightheight? leftHeight : rightheight) + 1;
+}
+
+static int balanceFactor(node_t * root)
+{
+    if (root == NULL) {
+        return 0;
+    }
+    
+    int rightHeight = maxChildHeight(root->right);
+    int leftHeight = maxChildHeight(root->left);
+    
+    return (leftHeight - rightHeight);
+}
+
+void balanceNode(node_t * node)
 {
     if (node == NULL)
         return;
@@ -193,79 +249,34 @@ static void balanceNode(node_t * node)
     balanceNode(node->parent);
 }
 
-void insertLetter(node_t * root, char * character, float darkness)
+#pragma mark - Search
+
+node_t * findNode(node_t * root, float darkness, float diff)
 {
-    float rootDarkness = root->letter->darkness;
     
-    if (strcmp(root->letter->character, character) == 0) {
-        return;
+    if (!root) {
+        return NULL;
     }
     
-    if (darkness < rootDarkness) {
-        if (root->left == NULL) {
-            
-            node_t * n = newNode(character, darkness);
-            setLeftNode(root, n);
-            balanceNode(root->parent);
-            
-        } else {
-            insertLetter(root->left, character, darkness);
-        }
+    float nodeDarkness = root->letter->darkness;
+    float matchedDarkness = nodeDarkness > darkness ? nodeDarkness - darkness : darkness - nodeDarkness; //How close of a match it is
+    
+    if (diff < matchedDarkness) {
+        //This node is actually less of a match than the previous node.
+        return NULL;
+    }
+    
+    if (darkness < nodeDarkness) {
+        node_t * found = findNode(root->left, darkness, matchedDarkness);
+        return found ? found : root;
     } else {
-        if (root->right == NULL) {
-            
-            node_t * n = newNode(character, darkness);
-            setRightNode(root, n);
-            balanceNode(root->parent);
-
-        } else {
-            insertLetter(root->right, character, darkness);
-        }
+        node_t * found = findNode(root->right, darkness, matchedDarkness);
+        return found ? found : root;
     }
-    
 }
 
-static void destroyNode(node_t * node)
+char * findLetter(node_t * root, float darkness)
 {
-    if (node == NULL) return;
-    
-    free(node->letter->character);
-    free(node->letter);
-    free(node);
+    node_t * node = findNode(root, darkness, 100000);
+    return node->letter->character;
 }
-
-void destroyTree(node_t * root)
-{
-    if (root == NULL) return;
-    
-    destroyTree(root->left);
-    root->left = NULL;
-    destroyTree(root->right);
-    root->right = NULL;
-    destroyNode(root);
-}
-
-static int maxChildHeight(node_t * root)
-{   
-    if (root == NULL)
-        return 0;
-    
-    int leftHeight = maxChildHeight(root->left);
-    int rightheight = maxChildHeight(root->right);
-    
-    return (leftHeight > rightheight? leftHeight : rightheight) + 1;
-}
-
-int balanceFactor(node_t * root)
-{
-    if (root == NULL) {
-        return 0;
-    }
-    
-    int rightHeight = maxChildHeight(root->right);
-    int leftHeight = maxChildHeight(root->left);
-
-    return (leftHeight - rightHeight);
-}
-
-
