@@ -171,8 +171,8 @@ static void balanceNode(node_t * node)
                     rotateLeft(node);
                 }
                 else if (rightBal == 1) {
-                    rotateLeft(node->right);
-                    rotateRight(node);
+                    rotateRight(node->right);
+                    rotateLeft(node);
                 }
                 break;
             case 2:;
