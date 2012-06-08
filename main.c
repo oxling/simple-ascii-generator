@@ -13,23 +13,23 @@
 #import "letter.h"
 #import "bitmap.h"
 
-static void calculateGrid(unsigned char * bmpData, int grid, int width, int height, node_t * root)
+static void calculateGrid(unsigned char * bmpData, int gridCols, int gridRows, int width, int height, node_t * root)
 {
     int rowSize = (BITS_PER_PIXEL * width)/32 * 4;
     
-    int gridHeight = height/grid;
-    int gridWidth = width/grid;
+    int gridHeight = height/gridRows;
+    int gridWidth = width/gridCols;
     
     for (int row=0; row<gridHeight; row++) {
         for (int col=0; col<gridWidth; col++) {
             float sum = 0;
-            for (int pxRow=0; pxRow<grid; pxRow++) {
-                for (int pxCol=0; pxCol<grid; pxCol++) {
-                    float val = darkness(locatePixel(bmpData, rowSize, row*grid+pxRow, col*grid+pxCol));
+            for (int pxRow=0; pxRow<gridRows; pxRow++) {
+                for (int pxCol=0; pxCol<gridCols; pxCol++) {
+                    float val = darkness(locatePixel(bmpData, rowSize, row*gridRows+pxRow, col*gridCols+pxCol));
                     sum+=val;
                 }
             }
-            sum = sum/(grid * grid);
+            sum = sum/(gridCols * gridRows);
             char * letter = findLetter(root, sum);
             printf("%s", letter);
         }
@@ -153,12 +153,14 @@ int main (int argc, const char * argv[])
     int rowSize = 0;
      
     unsigned char * bmpData = createBitmapData(inputFile, &width, &height, &rowSize);
-    int grid = 1;
-    if (argc == 4) {
-        grid = atoi(argv[3]);
+    int gridCols = 1;
+    int gridRows = 1;
+    if (argc == 5) {
+        gridCols = atoi(argv[3]);
+        gridRows = atoi(argv[4]);
     }
    
-    calculateGrid(bmpData, grid, width, height, root);
+    calculateGrid(bmpData, gridCols, gridRows, width, height, root);
     
     free(bmpData);
     destroyTree(root);

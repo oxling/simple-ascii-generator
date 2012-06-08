@@ -35,8 +35,8 @@
 
 A simple ASCII-Art Generator.
 
-To use, run AsciiGenerator example/input.bmp example/definitions.txt [grid size]
+To use, run AsciiGenerator example/input.bmp example/definitions.txt [grid size width] [grid size height]
 
 The definitions file maps characters (including unicode characters) to darkness values. Note - ':' is a reserved character; trying to map a colon will cause the program to fail.
 
-The grid size defines scale - for example, a grid size of 2 will average a block of 4 pixels. This argument is optional.
+The grid size defines scale - for example, a grid size of 2, 3 will average a block of 6 pixels. This argument is optional.
