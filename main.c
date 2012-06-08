@@ -146,7 +146,7 @@ int main (int argc, const char * argv[])
     const char * inputFile = argv[1];
     const char * definitionsFile = argv[2];
         
-    node_t * root = createTreeFromFile(definitionsFile);
+    treeRoot = createTreeFromFile(definitionsFile);
        
     int width = 0;
     int height = 0;
@@ -158,10 +158,10 @@ int main (int argc, const char * argv[])
         grid = atoi(argv[3]);
     }
    
-    calculateGrid(bmpData, grid, width, height, root);
+    calculateGrid(bmpData, grid, width, height, treeRoot);
     
     free(bmpData);
-    destroyTree(root);
+    destroyTree(treeRoot);
     
     return 0;
 }

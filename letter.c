@@ -62,11 +62,59 @@ char * findLetter(node_t * root, float darkness)
     return node->letter->character;
 }
 
-//TODO
-static node_t * rotateRight(node_t * root)
+static void setLeftNode(node_t * parent, node_t * leaf)
 {
-    node_t * rootParent = root->parent;
-    return root;
+    if (parent == NULL)
+        return;
+    
+    parent->left = leaf;
+    
+    if (leaf)
+        leaf->parent = parent;
+}
+
+static void setRightNode(node_t * parent, node_t * leaf)
+{
+    if (parent == NULL)
+        return;
+    
+    parent->right = leaf;
+    
+    if (leaf)
+        leaf->parent = parent;
+}
+
+static void testNode(node_t * node)
+{
+    if (node == NULL) return;
+    
+    assert(node != node->parent);
+    assert(node != node->left);
+    assert(node != node->right);
+    assert(node->left != node->parent);
+    assert(node->right != node->parent);
+    assert((node->left != node->right) || (node->left == NULL && node->right == NULL));
+}
+
+static void rotateRight(node_t * node)
+{
+    node_t * newRoot = node->left;
+    node_t * nodeParent = node->parent;
+    
+    setRightNode(newRoot, node);
+    setLeftNode(newRoot, node->left->left);
+    
+    setLeftNode(node, NULL);
+    
+    if (node == treeRoot) {
+        treeRoot = newRoot;
+    }
+    
+    newRoot->parent = nodeParent;
+    
+    testNode(node);
+    testNode(newRoot);
+    testNode(nodeParent);
 }
 
 static node_t * balanceNode(node_t * node)
@@ -90,10 +138,10 @@ static node_t * balanceNode(node_t * node)
             case 2:;
                 int leftBal = balanceFactor(node->left);
                 if (leftBal == 1)
-                    printf("left left case\n");
+                    rotateRight(rootNode);
                 else if (leftBal == -1) {
                     printf("left right case\n");
-                    rootNode = rotateRight(node);
+                //    rotateRight(node);
                 }
                 break;
             default:
@@ -116,9 +164,7 @@ void insertLetter(node_t * root, char * character, float darkness)
         if (root->left == NULL) {
             
             node_t * n = newNode(character, darkness);
-            root->left = n;
-            n->parent = root;
-            
+            setLeftNode(root, n);
             balanceNode(root->parent);
             
         } else {
@@ -128,9 +174,7 @@ void insertLetter(node_t * root, char * character, float darkness)
         if (root->right == NULL) {
             
             node_t * n = newNode(character, darkness);
-            root->right = n;
-            n->parent = root;
-            
+            setRightNode(root, n);
             balanceNode(root->parent);
 
         } else {

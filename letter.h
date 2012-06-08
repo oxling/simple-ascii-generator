@@ -21,8 +21,10 @@ typedef struct node {
     struct letter * letter;
 } node_t;
 
-node_t * newNode(char * character, float darkness);
+node_t * treeRoot;
 
+
+node_t * newNode(char * character, float darkness);
 char * findLetter(node_t * root, float darkness);
 int balanceFactor(node_t * root);
 void insertLetter(node_t * root, char * character, float darkness);
