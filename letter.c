@@ -130,6 +130,31 @@ static void rotateRight(node_t * node)
     }
 }
 
+static void rotateLeft(node_t * node)
+{
+    node_t * newRoot = node->right;
+    node_t * oldLeftChild= newRoot->left;
+    node_t * parent = node->parent;
+    
+    if (node == treeRoot) {
+        treeRoot = newRoot;
+    }
+    
+    setLeftNode(newRoot, node);
+    setRightNode(node, oldLeftChild);
+    
+    if (parent) {
+        if (parent->left == node) {
+            setLeftNode(parent, newRoot);
+        } else if (parent->right == node) {
+            setRightNode(parent, newRoot);
+        }
+    } else {
+        newRoot->parent = NULL;
+    }
+
+}
+
 static void balanceNode(node_t * node)
 {
     if (node == NULL)
@@ -142,10 +167,13 @@ static void balanceNode(node_t * node)
         switch (diff) {
             case -2:;
                 int rightBal = balanceFactor(node->right);
-                if (rightBal == -1)
-                    printf("right right case\n");
-                else if (rightBal == 1)
-                    printf("right left case\n");
+                if (rightBal == -1) {
+                    rotateLeft(node);
+                }
+                else if (rightBal == 1) {
+                    rotateLeft(node->right);
+                    rotateRight(node);
+                }
                 break;
             case 2:;
                 int leftBal = balanceFactor(node->left);
@@ -153,14 +181,16 @@ static void balanceNode(node_t * node)
                     rotateRight(node);
                 }
                 else if (leftBal == -1) {
-                    printf("left right case\n");
-                //    rotateRight(node);
+                    rotateLeft(node->left);
+                    rotateRight(node);
                 }
                 break;
             default:
                 printf("Unbalanced: %i\n", diff);
         }
     }
+    
+    balanceNode(node->parent);
 }
 
 void insertLetter(node_t * root, char * character, float darkness)
