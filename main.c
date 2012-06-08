@@ -159,8 +159,6 @@ int main (int argc, const char * argv[])
    
     calculateGrid(bmpData, gridCols, gridRows, width, height, treeRoot);
     
-    printTree();
-    
     free(bmpData);
     destroyTree(treeRoot);
     
