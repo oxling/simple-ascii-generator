@@ -29,6 +29,8 @@ char * findLetter(node_t * root, float darkness);
 int balanceFactor(node_t * root);
 void insertLetter(node_t * root, char * character, float darkness);
 void destroyTree(node_t * root);
+void testNode(node_t * node);
+void printTree();
 
 
 
